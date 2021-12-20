@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Header from '../components/header';
-import Navbar from '../components/navbar';
+import Sidebar from '../components/sidebar';
 import Footer from '../components/footer';
 
 
@@ -96,7 +96,7 @@ export default function Statistics() {
         justfiyContent='space-evenly'
         sx={{mt: 8, mb: 30, height: '800px'}}
         >
-            <Navbar />
+            <Sidebar />
 
             <Grid item>
 

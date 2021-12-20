@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -9,10 +9,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-
 import Header from '../components/header';
-import Navbar from '../components/navbar';
+import Sidebar from '../components/sidebar';
 import Footer from '../components/footer';
+import { Context } from './Context';
 
 const theme = createTheme();
 
@@ -152,6 +152,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Lectures() {
     const classes = useStyles();
 
+    const [isCollapsed, setIsCollapsed] = useContext(Context);
+
     const dummyTxt = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry...';
 
     const [values, setValues] = React.useState({
@@ -183,9 +185,8 @@ export default function Lectures() {
         justfiyContent='space-evenly'
         sx={{mt: 8, mb: 30}}
         >
-            <Navbar />
-
-            <Grid item xs={9} sx={{ml: 7}}>
+            <Sidebar />
+            <Grid item xs={isCollapsed ? 9 : 8} sx={{ml: 7}}>
                   <Grid container
                   direction='column'
                   justifyContent=''

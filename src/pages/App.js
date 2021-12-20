@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Login from './Login';
 import Register from './Register';
 import Home from './Home';
@@ -7,12 +6,12 @@ import Lectures from './Lectures';
 import Form from './Form';
 import Chat from './Chat';
 import Statistics from './Statistics';
+import {Context} from './Context';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 
-const Context = React.createContext();
-
 export default function App() {
+
   const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   return (

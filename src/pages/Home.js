@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
@@ -9,9 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import registerImg from '../assets/register.png';
 import loginImg from '../assets/login.png';
 import Header from '../components/header';
-import Navbar from '../components/navbar';
+import Sidebar from '../components/sidebar';
 import Footer from '../components/footer';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Context } from './Context';
 
 const theme = createTheme();
 
@@ -129,6 +130,8 @@ export default function Home() {
   const classes = useStyles();
   let navigate = useNavigate();
 
+  const [isCollapsed, setIsCollapsed] = useContext(Context);
+
   const dummyTxt = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"+ 
   "industry's standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry...";
 
@@ -145,8 +148,8 @@ export default function Home() {
         justfiyContent='space-evenly'
         sx={{mt: 8, mb: 30, height: '800px'}}
         >
-            <Navbar />
-            <Grid item xs={8} sx={{ml: 7}}>
+            <Sidebar />
+            <Grid item xs={isCollapsed ? 9 : 8} sx={{ml: 7}}>
                 <Grid container
                 direction='row'
                 justifyContent=''
