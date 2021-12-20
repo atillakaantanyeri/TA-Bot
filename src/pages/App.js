@@ -9,24 +9,29 @@ import Chat from './Chat';
 import Statistics from './Statistics';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
+
+const Context = React.createContext();
+
 export default function App() {
-  // const [status, setStatus] = React.useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   return (
-    <BrowserRouter>
-      <div>
-        
-        <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/register' element={<Register/>}/>
-          <Route path='/lectures' element={<Lectures/>}/>
-          <Route path='/form' element={<Form/>}/>
-          <Route path='/statistics' element={<Statistics/>}/>
-          <Route path='/chat' element={<Chat/>}/>
-        </Routes>
+    <Context.Provider value={[isCollapsed, setIsCollapsed]}>
+      <BrowserRouter>
+        <div>
+          
+          <Routes>
+            <Route path='/' element={<Home/>}/>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/register' element={<Register/>}/>
+            <Route path='/lectures' element={<Lectures/>}/>
+            <Route path='/form' element={<Form/>}/>
+            <Route path='/statistics' element={<Statistics/>}/>
+            <Route path='/chat' element={<Chat/>}/>
+          </Routes>
 
-      </div>
-    </BrowserRouter>
+        </div>
+      </BrowserRouter>
+    </Context.Provider>
   );
 }

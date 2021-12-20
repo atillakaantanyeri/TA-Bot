@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -27,7 +27,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import registerImg from '../assets/register.png';
 import tabotIcon from '../assets/tabot.jpg';
-import Footer from '../components/footer';
 
 const theme = createTheme();
 
@@ -345,6 +344,11 @@ export default function Register() {
     'Select University',
     'Create Password',
   ];
+
+  useEffect(() => {
+    if(sessionStorage.getItem('session'))
+        navigate("/");
+  }, []);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -681,7 +685,13 @@ export default function Register() {
 
           </Grid>
 
-          <Footer />
+          <Grid container
+          direction="row"
+          justifyContent="center"
+          className={classes.footer}
+          >
+            <Typography variant='h3' sx={{ padding: 1}}> Copyright © 2021 TA-Bot Team | All Rights Reserved. </Typography>
+          </Grid>
         </ThemeProvider>
     </>
   );

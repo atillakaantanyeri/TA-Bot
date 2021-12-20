@@ -39,8 +39,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         width: "100%",
         [theme.breakpoints.up('xl')]: {
-          position:"fixed",
-          bottom:0,
+          bottom: 0,
         },
       },
   }));
@@ -55,7 +54,7 @@ export default function Header() {
         justifyContent="center"
         className={classes.footer}
         >
-        <Typography variant='h3' sx={{ padding: 1}}> Copyright © 2021 TA-Bot Team | All Rights Reserved. </Typography>
+          <Typography variant='h3' sx={{ padding: 1}}> Copyright © 2021 TA-Bot Team | All Rights Reserved. </Typography>
         </Grid>
     </>
   );

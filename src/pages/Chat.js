@@ -93,7 +93,7 @@ export default function Chat() {
         <Grid container
         direction='row'
         justfiyContent='space-evenly'
-        sx={{mt: 8, mb: 15, height: '800px'}}
+        sx={{mt: 8, mb: 30, height: '800px'}}
         >
             <Navbar />
 

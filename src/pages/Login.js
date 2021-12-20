@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -16,7 +16,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import loginImg from '../assets/login.png';
 import tabotIcon from '../assets/tabot.jpg';
-import Footer from '../components/footer';
 
 const theme = createTheme();
 
@@ -223,6 +222,11 @@ export default function Login() {
     checked: false,
   });
 
+  useEffect(() => {
+    if(sessionStorage.getItem('session'))
+        navigate("/");
+  }, []);
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -246,6 +250,7 @@ export default function Login() {
   };
 
   function login() {
+    sessionStorage.setItem('session', 'username');
     navigate('/');
   };
 
@@ -371,7 +376,13 @@ export default function Login() {
 
           </Grid>
 
-          <Footer />
+          <Grid container
+          direction="row"
+          justifyContent="center"
+          className={classes.footer}
+          >
+            <Typography variant='h3' sx={{ padding: 1}}> Copyright © 2021 TA-Bot Team | All Rights Reserved. </Typography>
+          </Grid>
         </ThemeProvider>
     </>
   );

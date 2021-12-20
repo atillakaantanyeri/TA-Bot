@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import LogoutIcon from '@mui/icons-material/Logout';
 import tabotIcon from '../assets/tabot.jpg';
@@ -18,9 +18,19 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function Header() {
-    
+    let navigate = useNavigate();
     const classes = useStyles();
 
+    useEffect(() => {
+        if(!sessionStorage.getItem('session'))
+            navigate("/login");
+    }, []);
+
+    function logOut() {
+        sessionStorage.setItem('session', '');
+        sessionStorage.clear();
+    };
+    
   return (
     <>
         <Grid container
@@ -59,7 +69,7 @@ export default function Header() {
                     </Grid>
                     <Grid item sx={{mt: "7px", ml: 10}}>
                         <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
-                            <LogoutIcon />
+                            <LogoutIcon onClick={logOut}/>
                         </Link>
                     </Grid>
                 </Grid>

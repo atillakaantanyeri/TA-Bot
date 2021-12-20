@@ -168,6 +168,8 @@ export default function Lectures() {
     function showHideAddLecture() {
       setValues({
         ...values,
+        semester: '',
+        lecture: '',
         isAddLectureHidden: !values.isAddLectureHidden,
       });
     }
@@ -179,11 +181,11 @@ export default function Lectures() {
         <Grid container
         direction='row'
         justfiyContent='space-evenly'
-        sx={{mt: 8, mb: 15}}
+        sx={{mt: 8, mb: 30}}
         >
             <Navbar />
 
-            <Grid item xs={8} sx={{ml: 7}}>
+            <Grid item xs={9} sx={{ml: 7}}>
                   <Grid container
                   direction='column'
                   justifyContent=''
