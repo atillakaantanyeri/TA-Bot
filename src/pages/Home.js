@@ -154,7 +154,7 @@ export default function Home() {
                 direction='row'
                 justifyContent=''
                 className={classes.textBox}
-                sx={{}}
+                sx={{mt: 1}}
                 >
                   <Grid item lg={3} xl={2} sx={{height: '250px'}}>
                     <img src={registerImg} alt="registerImg" className={classes.img}/>

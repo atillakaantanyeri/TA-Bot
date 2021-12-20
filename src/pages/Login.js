@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -13,9 +13,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Link, useNavigate } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 import loginImg from '../assets/login.png';
 import tabotIcon from '../assets/tabot.jpg';
+import { Context } from './Context';
 
 const theme = createTheme();
 
@@ -214,6 +214,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   let navigate = useNavigate();
   const classes = useStyles();
+
+  const [isCollapsed, setIsCollapsed] = useContext(Context);
   
   const [values, setValues] = React.useState({
     mailAdress: '',
@@ -251,6 +253,7 @@ export default function Login() {
 
   function login() {
     sessionStorage.setItem('session', 'username');
+    setIsCollapsed(false);
     navigate('/');
   };
 

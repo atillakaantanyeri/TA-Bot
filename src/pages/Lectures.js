@@ -16,7 +16,7 @@ import { Context } from './Context';
 
 const theme = createTheme();
 
-//button
+//button (black)
 const theme2 = createTheme({
   components: {
     MuiButton: {
@@ -161,6 +161,7 @@ export default function Lectures() {
       lecture: '',
       checked: false,
       isAddLectureHidden: true,
+      isMyLecturesHidden: false,
     });
   
     const handleChange = (prop) => (event) => {
@@ -173,6 +174,13 @@ export default function Lectures() {
         semester: '',
         lecture: '',
         isAddLectureHidden: !values.isAddLectureHidden,
+      });
+    }
+
+    function showMyLectures() {
+      setValues({
+        ...values,
+        isMyLecturesHidden: !values.isMyLecturesHidden,
       });
     }
 
@@ -190,7 +198,7 @@ export default function Lectures() {
                   <Grid container
                   direction='column'
                   justifyContent=''
-                  sx={{pl: 3}}
+                  sx={{pl: 3, mt:1 }}
                   >
                     <Grid item>
                       <Typography sx={{fontSize: 25, fontWeight: 'bold', mb: 8}}>MY LECTURES</Typography>
@@ -209,6 +217,18 @@ export default function Lectures() {
                                 sx={{lineHeight: '40px'}}
                                 >
                                   Add New Lecture
+                              </Button>
+                            </ThemeProvider>
+                          </Grid>
+                          <Grid item xs={3} sx={{mb: 5, ml: 5}}>
+                          <ThemeProvider theme={theme2}>
+                              <Button
+                                variant="contained"
+                                fullWidth
+                                onClick={showMyLectures}
+                                sx={{lineHeight: '40px'}}
+                                >
+                                  {!values.isMyLecturesHidden ? 'Show My Lectures' : 'Hide My Lectures'}
                               </Button>
                             </ThemeProvider>
                           </Grid>
@@ -294,6 +314,16 @@ export default function Lectures() {
                                   Cancel
                               </Button>
                           </Grid>
+                          <Grid item sx={{ml: 10}}>
+                              <Button
+                                variant="contained"
+                                fullWidth
+                                onClick={showMyLectures}
+                                sx={{lineHeight: '40px'}}
+                                >
+                                  {!values.isMyLecturesHidden ? 'Show My Lectures' : 'Hide My Lectures'}
+                              </Button>
+                          </Grid>
                           </ThemeProvider>
                         </Grid>
                     </Grid>
@@ -308,6 +338,9 @@ export default function Lectures() {
                   </Grid>
                 </>
                 )}
+                {!values.isMyLecturesHidden ? (
+                  <Grid item sx={{height: '400px'}}></Grid>
+                ) : (
                 <>
                 <Grid container
                 direction='row'
@@ -376,6 +409,7 @@ export default function Lectures() {
                   </Grid>
                 </Grid>
                 </>
+                )}
             </Grid>
 
         </Grid>
