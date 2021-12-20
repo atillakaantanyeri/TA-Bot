@@ -11,12 +11,12 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link, useNavigate } from "react-router-dom";
-
 import { makeStyles } from '@material-ui/core/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import loginImg from '../assets/login.png';
 import tabotIcon from '../assets/tabot.jpg';
+import Footer from '../components/footer';
 
 const theme = createTheme();
 
@@ -371,13 +371,7 @@ export default function Login() {
 
           </Grid>
 
-          <Grid container
-          direction="row"
-          justifyContent="center"
-          className={classes.footer}
-          >
-            <Typography variant='h3' sx={{ padding: 1}}> Copyright © 2021 TA-Bot Team | All Rights Reserved. </Typography>
-          </Grid>
+          <Footer />
         </ThemeProvider>
     </>
   );

@@ -27,6 +27,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import registerImg from '../assets/register.png';
 import tabotIcon from '../assets/tabot.jpg';
+import Footer from '../components/footer';
 
 const theme = createTheme();
 
@@ -40,7 +41,7 @@ const theme2 = createTheme({
           boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
           color: 'black',
           fontWeight: 'bold',
-          fontSize: 13,
+          fontSize: 14,
           borderRadius: 10,
           height:'40px',
           width: '120px',
@@ -63,7 +64,7 @@ const theme3 = createTheme({
           boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
           color: 'black',
           fontWeight: 'bold',
-          fontSize: 13,
+          fontSize: 14,
           borderRadius: 10,
           height:'40px',
           width: '160px',
@@ -489,6 +490,7 @@ export default function Register() {
                         variant="contained"
                         fullWidth
                         onClick={nextStep}
+                        sx={{lineHeight: '40px'}}
                         >
                         NEXT <ArrowForwardIcon sx={{ml: 1, height: 18, width: 18,}}/>
                       </Button>
@@ -550,6 +552,7 @@ export default function Register() {
                         variant="contained"
                         fullWidth
                         onClick={previousStep}
+                        sx={{lineHeight: '40px'}}
                         >
                         <ArrowBackIcon sx={{mr: 1, height: 18, width: 18,}}/> PREVIOUS
                       </Button>
@@ -561,8 +564,9 @@ export default function Register() {
                         variant="contained"
                         fullWidth
                         onClick={nextStep}
+                        sx={{lineHeight: '40px'}}
                         >
-                        NEXT <ArrowForwardIcon sx={{ml: 1, height: 18, width: 18,}}/>
+                        NEXT <ArrowForwardIcon sx={{ml: 1, mb: 0, height: 18, width: 18,}}/>
                       </Button>
                     </ThemeProvider>
                     </Grid>
@@ -648,6 +652,7 @@ export default function Register() {
                         variant="contained"
                         fullWidth
                         onClick={previousStep}
+                        sx={{lineHeight: '40px'}}
                         >
                         <ArrowBackIcon sx={{mr: 1, height: 18, width: 18,}}/> PREVIOUS
                       </Button>
@@ -660,6 +665,7 @@ export default function Register() {
                         fullWidth
                         onClick={register}
                         sx={{width: '160px'}}
+                        sx={{lineHeight: '40px'}}
                         >
                         REGISTER
                       </Button>
@@ -675,13 +681,7 @@ export default function Register() {
 
           </Grid>
 
-          <Grid container
-          direction="row"
-          justifyContent="center"
-          className={classes.footer}
-          >
-            <Typography variant='h3' sx={{ padding: 1}}> Copyright © 2021 TA-Bot Team | All Rights Reserved. </Typography>
-          </Grid>
+          <Footer />
         </ThemeProvider>
     </>
   );

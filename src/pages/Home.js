@@ -129,6 +129,9 @@ export default function Home() {
   const classes = useStyles();
   let navigate = useNavigate();
 
+  const dummyTxt = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"+ 
+  "industry's standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry...";
+
   function getStarted() {
     navigate('/lectures');
   };
@@ -155,8 +158,7 @@ export default function Home() {
                   </Grid>
                   <Grid item xs={9} sx={{padding: 5}}>
                       <Typography sx={{fontSize: 25, fontWeight: 'bold'}}>Welcome to TA-Bot</Typography>
-                      <Typography variant='h3' sx={{paddingTop: 3}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the 
-                      industry's standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry...</Typography>
+                      <Typography variant='h3' sx={{paddingTop: 3}}>{dummyTxt}</Typography>
                   </Grid>
                 </Grid>
                 <Grid container
@@ -170,13 +172,11 @@ export default function Home() {
                     >
                       <Grid item sx={{height: '200px', padding: 3}} className={classes.textBox}>
                           <Typography sx={{fontSize: 25, fontWeight: 'bold'}}>Our Vision</Typography>
-                          <Typography variant='h3' sx={{paddingTop: 3}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                          industry's standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry...</Typography>
+                          <Typography variant='h3' sx={{paddingTop: 3}}>{dummyTxt}</Typography>
                       </Grid>
                       <Grid item sx={{height: '200px', padding: 3, mt: 5}} className={classes.textBox}>
                           <Typography sx={{fontSize: 25, fontWeight: 'bold'}}>Our Mission</Typography>
-                          <Typography variant='h3' sx={{paddingTop: 3}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the 
-                          industry's standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry...</Typography>
+                          <Typography variant='h3' sx={{paddingTop: 3}}>{dummyTxt}</Typography>
                       </Grid>
                     </Grid>
                   </Grid>

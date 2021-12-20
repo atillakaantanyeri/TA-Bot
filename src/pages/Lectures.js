@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Header from '../components/header';
 import Navbar from '../components/navbar';
+import Footer from '../components/footer';
 
 const theme = createTheme();
 //text themes
@@ -93,7 +94,7 @@ export default function Lectures() {
         <Grid container
         direction='row'
         justfiyContent='space-evenly'
-        sx={{mt: 8}}
+        sx={{mt: 8, mb: 15, height: '800px'}}
         >
             <Navbar />
 
@@ -102,6 +103,7 @@ export default function Lectures() {
             </Grid>
 
         </Grid>
+        <Footer />
     </ThemeProvider>
     </>
   );
