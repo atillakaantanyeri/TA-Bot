@@ -35,8 +35,9 @@ const theme = createTheme();
 //css classes
 const useStyles = makeStyles((theme) => ({
     footer: {
-        backgroundColor: 'rgba(196, 196, 196, 0.1)',
-        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        backgroundColor: 'rgba(196, 196, 196, 0.01)',
+        boxShadow: '4px 0px 4px rgba(0, 0, 0, 0.1)',
+        borderTop: '1px solid rgba(0, 0, 0, 0.1)',
         width: "100%",
         [theme.breakpoints.up('xl')]: {
           bottom: 0,

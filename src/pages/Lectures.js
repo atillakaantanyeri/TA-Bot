@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -14,6 +14,7 @@ import Header from '../components/header';
 import Sidebar from '../components/sidebar';
 import Footer from '../components/footer';
 import { Context } from './Context';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -177,6 +178,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Lectures() {
     const classes = useStyles();
+    const navigate = useNavigate();
 
     const {value1, value2, value3} = useContext(Context);
     const [isCollapsed, setIsCollapsed] = value1;
@@ -328,6 +330,7 @@ export default function Lectures() {
 
     function selectLecture(lecture) {
       setSelectedLecture(lecture);
+      navigate('/chat');
     };
 
   return (
@@ -337,10 +340,10 @@ export default function Lectures() {
         <Grid container
         direction='row'
         justfiyContent='space-evenly'
-        sx={{mt: 8, mb: 20}}
+        sx={{height: '100%'}}
         >
             <Sidebar />
-            <Grid item xs={isCollapsed ? 9 : 8} sx={{ml: 7}}>
+            <Grid item xs={isCollapsed ? 10 : 9} sx={{mt: 4, mx: 'auto', mb: 10}}>
                   <Grid container
                   direction='column'
                   justifyContent=''

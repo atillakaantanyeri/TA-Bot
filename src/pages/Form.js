@@ -93,11 +93,11 @@ export default function Form() {
         <Grid container
         direction='row'
         justfiyContent='space-evenly'
-        sx={{mt: 8, mb: 20, height: '800px'}}
+        sx={{height: '800px'}}
         >
             <Sidebar />
 
-            <Grid item>
+            <Grid item sx={{mt: 4, mx: 'auto', mb: 10}}>
 
             </Grid>
 

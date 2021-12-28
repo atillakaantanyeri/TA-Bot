@@ -36,27 +36,32 @@ export default function Header() {
         <Grid container
         direction='row'
         justifyContent='space-between'
-        sx={{height: '81px', lineHeight: '80px'}}
+        sx={{
+            height: '100px', 
+            lineHeight: '80px', 
+            backgroundColor: 'rgba(196, 196, 196, 0.01)',
+            boxShadow: '4px 2px 4px rgba(0, 0, 0, 0.1)',
+            borderBottom: '1px solid rgba(0, 0, 0, 0.1)'}}
         >
-            <Grid item xs={8}>
+            <Grid item xs={8} sx={{mt: 1}}>
                     <Grid container
                     direction='row'
                     justifyContent=''
                     sx={{pl: 3}}
                     >
-                        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+                        <Link to="/" style={{ textDecoration: 'none', color: 'black'}}>
                             <Grid item>
                                 <img src={tabotIcon} alt="tabotIcon" className={classes.icon}/>
                             </Grid>
                         </Link>
-                        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+                        <Link to="/" style={{ textDecoration: 'none', color: 'black'}}>
                             <Grid item>
                                 <Typography variant='h2'>TA-Bot</Typography>
                             </Grid>
                         </Link>
                     </Grid>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4} sx={{mt: 1}}>
                 <Grid container
                 direction='row'
                 justifyContent='center'

@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#F3DD00',
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         borderRadius: '25px',
-        width: '220px',
         transition: 'width',
         overflow: 'hidden'
     },
@@ -36,13 +35,16 @@ export default function Sidebar() {
     const classes = useStyles();
     const location = useLocation();
 
-    const {value1, value2} = useContext(Context);
+    const {value1} = useContext(Context);
     const [isCollapsed, setIsCollapsed] = value1;
 
+    const currentWidth = window.innerWidth;
+
     function collapseSidebar() {
+        console.log(currentWidth);
         if(!isCollapsed) {
             setIsCollapsed(!isCollapsed);
-            document.getElementById('icon').style.width = '80px';
+            document.getElementById('icon').style.width = '130px';
             document.getElementById('home').style.width = '80px';
             document.getElementById('lectures').style.width = '80px';
             document.getElementById('form').style.width = '80px';
@@ -50,23 +52,27 @@ export default function Sidebar() {
         }
         else {
             setIsCollapsed(!isCollapsed);
-            document.getElementById('icon').style.width = '240px';
-            document.getElementById('home').style.width = '220px';
-            document.getElementById('lectures').style.width = '220px';
-            document.getElementById('form').style.width = '220px';
-            document.getElementById('statistics').style.width = '220px'; 
+            document.getElementById('icon').style.width = '100%';
+            document.getElementById('home').style.width = '80%';
+            document.getElementById('lectures').style.width = '80%';
+            document.getElementById('form').style.width = '80%';
+            document.getElementById('statistics').style.width = '80%'; 
         }
     };
 
   return (
     <>
-        <Grid item xs={isCollapsed ? 1 : 2} sx={{ml: 6, mt: 1}}>
+        <Grid item xs={isCollapsed ? 1 : 2} sx={{ 
+            backgroundColor: 'rgba(196, 196, 196, 0.01)',
+            boxShadow: '2px 0px 4px rgba(0, 0, 0, 0.1)',
+            borderRight: '1px solid rgba(0, 0, 0, 0.1)',}}>
             <Grid container
             direction='column'
             justfiyContent='space-evenly'
             spacing={1}
+            sx={{mt: 1}}
             >
-                <Grid item id='icon' sx={{textAlign: 'end', width: isCollapsed ? '80px' : '240px', transition: 'width'}}>
+                <Grid item fullWidth id='icon' sx={{textAlign: 'end', pr: 1, width: isCollapsed ? '130px' : null, transition: 'width'}}>
                     <IconButton onClick={collapseSidebar}>
                         {isCollapsed ? ( 
                             <ArrowRightIcon />
@@ -75,8 +81,8 @@ export default function Sidebar() {
                         )}
                     </IconButton>
                 </Grid>   
-                <Grid item id='home' className={location.pathname === '/' ? classes.sidebarItems : null}
-                sx={{mt: 2, width: isCollapsed ? '80px' : '220px'}}>
+                <Grid item fullWidth id='home' className={location.pathname === '/' ? classes.sidebarItems : null}
+                sx={{mt: 2, mx: (currentWidth > 1400) ? 5 : 2, width: isCollapsed ? '80px' : null}}>
                     <Link to="/" style={{ textDecoration: 'none' }}>
                         <Grid container
                         direction='row'
@@ -89,14 +95,14 @@ export default function Sidebar() {
                             </Grid>
                             {!isCollapsed ? ( 
                             <Grid item>
-                                <Typography sx={{fontWeight: location.pathname === '/' ? 'bold' : null, lineHeight: '30px', fontSize: 15}}>Home</Typography>
+                                <Typography sx={{fontWeight: location.pathname === '/' ? 'bold' : null, lineHeight: '30px', fontSize: 13}}>Home</Typography>
                             </Grid>
                             ) : null}
                         </Grid>
                     </Link>
                 </Grid>
-                <Grid item id='lectures' className={location.pathname === '/lectures' ? classes.sidebarItems : null}
-                sx={{mt: 2, width: isCollapsed ? '80px' : '220px'}}>
+                <Grid item fullWidth id='lectures' className={location.pathname === '/lectures' || location.pathname === '/chat' ? classes.sidebarItems : null}
+                sx={{mt: 2, mx: (currentWidth > 1400) ? 5 : 2, width: isCollapsed ? '80px' : null}}>
                     <Link to="/lectures" style={{ textDecoration: 'none' }} >
                         <Grid container
                         direction='row'
@@ -105,18 +111,18 @@ export default function Sidebar() {
                         sx={{ml: 0, color: 'black'}}
                         >
                             <Grid item>
-                                <img src={location.pathname === '/lectures' ? lecturesBlack : lecturesWhite} className={classes.sidebarIcons}/>
+                                <img src={location.pathname === '/lectures' || location.pathname === '/chat' ? lecturesBlack : lecturesWhite} className={classes.sidebarIcons}/>
                             </Grid>
                             {!isCollapsed ? (
                             <Grid item>
-                                <Typography sx={{fontWeight: location.pathname === '/lectures' ? 'bold' : null, lineHeight: '30px', fontSize: 15}}>My Lectures</Typography>
+                                <Typography sx={{fontWeight: location.pathname === '/lectures' || location.pathname === '/chat' ? 'bold' : null, lineHeight: '30px', fontSize: 13}}>My Lectures</Typography>
                             </Grid>
                             ) : null}
                         </Grid>
                     </Link>
                 </Grid>
-                <Grid item id='form' className={location.pathname === '/form' ? classes.sidebarItems : null}
-                sx={{mt: 2, width: isCollapsed ? '80px' : '220px'}}>
+                <Grid item fullWidth id='form' className={location.pathname === '/form' ? classes.sidebarItems : null}
+                sx={{mt: 2,mx: (currentWidth > 1400) ? 5 : 2, width: isCollapsed ? '80px' : null}}>
                     <Link to="/form" style={{ textDecoration: 'none' }}>
                         <Grid container
                         direction='row'
@@ -129,14 +135,14 @@ export default function Sidebar() {
                             </Grid>
                             {!isCollapsed ? (
                             <Grid item>
-                                <Typography sx={{fontWeight: location.pathname === '/form' ? 'bold' : null, lineHeight: '30px', fontSize: 15}}>Evaluation Form</Typography>
+                                <Typography sx={{fontWeight: location.pathname === '/form' ? 'bold' : null, lineHeight: '30px', fontSize: 13}}>Evaluation Form</Typography>
                             </Grid>
                             ) : null}
                         </Grid>
                     </Link>
                 </Grid>
-                <Grid item id='statistics' className={location.pathname === '/statistics' ? classes.sidebarItems : null}
-                sx={{mt: 2, width: isCollapsed ? '80px' : '220px'}}>
+                <Grid item fullWidth id='statistics' className={location.pathname === '/statistics' ? classes.sidebarItems : null}
+                sx={{mt: 2, mx: (currentWidth > 1400) ? 5 : 2, width: isCollapsed ? '80px' : null}}>
                     <Link to="/statistics" style={{ textDecoration: 'none' }}>
                         <Grid container
                         direction='row'
@@ -149,7 +155,7 @@ export default function Sidebar() {
                             </Grid>
                             {!isCollapsed ? (
                             <Grid item>
-                                <Typography sx={{fontWeight: location.pathname === '/statistics' ? 'bold' : null, lineHeight: '30px', fontSize: 15,}}>TA-Bot Statistics</Typography>
+                                <Typography sx={{fontWeight: location.pathname === '/statistics' ? 'bold' : null, lineHeight: '30px', fontSize: 13,}}>TA-Bot Statistics</Typography>
                             </Grid>
                             ) : null}
                         </Grid>

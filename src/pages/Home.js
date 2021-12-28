@@ -147,10 +147,10 @@ export default function Home() {
         <Grid container
         direction='row'
         justfiyContent='space-evenly'
-        sx={{mt: 8, mb: 30, height: '800px'}}
+        sx={{height: '100%'}}
         >
             <Sidebar />
-            <Grid item xs={isCollapsed ? 9 : 8} sx={{ml: 7}}>
+            <Grid item xs={isCollapsed ? 10 : 9} sx={{mt: 4, mx: 'auto', mb: 10}}>
                 <Grid container
                 direction='row'
                 justifyContent=''
