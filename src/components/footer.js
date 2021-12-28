@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         [theme.breakpoints.up('xl')]: {
           bottom: 0,
+          visibility: 'hidden'
         },
       },
   }));

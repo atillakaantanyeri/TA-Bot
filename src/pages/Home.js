@@ -130,7 +130,8 @@ export default function Home() {
   const classes = useStyles();
   let navigate = useNavigate();
 
-  const [isCollapsed, setIsCollapsed] = useContext(Context);
+  const {value1, value2} = useContext(Context);
+  const [isCollapsed, setIsCollapsed] = value1;
 
   const dummyTxt = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"+ 
   "industry's standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry...";

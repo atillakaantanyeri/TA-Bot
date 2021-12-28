@@ -1,10 +1,11 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import { useLocation } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
@@ -33,6 +34,30 @@ const theme2 = createTheme({
           backgroundColor: 'black',
           '&:hover': {
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
+          },
+        },
+      }
+    }
+  }
+});
+
+//button (yellow)
+const theme3 = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          border: '1px solid rgba(0, 0, 0, 0.54)',
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+          color: 'black',
+          fontWeight: 'bold',
+          fontSize: 11,
+          borderRadius: 15,
+          height: '56px',
+          marginTop: '',
+          backgroundColor: '#F3DD00',
+          '&:hover': {
+            backgroundColor: '#FFE800',
           },
         },
       }
@@ -119,6 +144,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     height: '200px',
     cursor: 'pointer',
+    transition: 'background-color 1s',
     '&:hover': {
       backgroundColor: '#F3DD00',
     },
@@ -152,7 +178,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Lectures() {
     const classes = useStyles();
 
-    const [isCollapsed, setIsCollapsed] = useContext(Context);
+    const {value1, value2, value3} = useContext(Context);
+    const [isCollapsed, setIsCollapsed] = value1;
+    const [myLectures, setMyLectures] = value2;
+    const [selectedLecture, setSelectedLecture] = value3;
 
     const dummyTxt = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry...';
 
@@ -161,28 +190,145 @@ export default function Lectures() {
       lecture: '',
       checked: false,
       isAddLectureHidden: true,
-      isMyLecturesHidden: false,
+      isDeleteLectureHidden: true,
+      isMyLecturesHidden: true,
+      isEditLectureHidden: true,
+      showDeleteMsg: false,
+      deletedLecture: '',
+      showAddMsg: false,
+      addMsg: '',
     });
-  
+
     const handleChange = (prop) => (event) => {
       setValues({ ...values, [prop]: event.target.value });
     };
 
+    function showHideEditLecture() {
+      if(values.isEditLectureHidden) {
+        setValues({
+          ...values,
+          isEditLectureHidden: !values.isEditLectureHidden,
+          isAddLectureHidden: !values.isAddLectureHidden,
+        });
+      } else if(!values.isAddLectureHidden) {
+        setValues({
+          ...values,
+          semester: '',
+          lecture: '',
+          isEditLectureHidden: !values.isEditLectureHidden,
+          isAddLectureHidden: !values.isAddLectureHidden,
+        });
+      } else if(!values.isDeleteLectureHidden) {
+        setValues({
+          ...values,
+          semester: '',
+          lecture: '',
+          isEditLectureHidden: !values.isEditLectureHidden,
+          isDeleteLectureHidden: !values.isDeleteLectureHidden,
+        });
+      }
+    };
+
     function showHideAddLecture() {
-      setValues({
-        ...values,
-        semester: '',
-        lecture: '',
-        isAddLectureHidden: !values.isAddLectureHidden,
-      });
-    }
+      if(values.isAddLectureHidden) {
+        setValues({
+          ...values,
+          semester: '',
+          lecture: '',
+          isAddLectureHidden: !values.isAddLectureHidden,
+          isDeleteLectureHidden: !values.isDeleteLectureHidden,
+          showDeleteMsg: false,
+          showAddMsg: false,
+        });
+      } 
+    };
+    
+    function showHideDeleteLecture() {
+      if(values.isDeleteLectureHidden) {
+        setValues({
+          ...values,
+          isAddLectureHidden: !values.isAddLectureHidden,
+          isDeleteLectureHidden: !values.isDeleteLectureHidden,
+          showDeleteMsg: false,
+          showAddMsg: false,
+        });
+        if(!myLectures[0]) {
+          setValues({
+            ...values,
+            isAddLectureHidden: !values.isAddLectureHidden,
+            isDeleteLectureHidden: !values.isDeleteLectureHidden,
+            isMyLecturesHidden: false,
+          });
+        } 
+      }
+    };
 
     function showMyLectures() {
       setValues({
         ...values,
         isMyLecturesHidden: !values.isMyLecturesHidden,
       });
-    }
+    };
+
+    function addLecture() {
+      if(!values.semester && !values.lecture) {
+        setValues({
+          ...values,
+          showAddMsg: true,
+          addMsg: 'Please select semester and lecture',
+        });
+      } else if(!values.semester) {
+        setValues({
+          ...values,
+          showAddMsg: true,
+          addMsg: 'Please select a semester',
+        });
+      } else if(!values.lecture) {
+        setValues({
+          ...values,
+          showAddMsg: true,
+          addMsg: 'Please select a lecture',
+        });
+      } else {
+        let tempLecture = values.lecture.split(' - ');
+        setValues({
+          ...values,
+          semester: '',
+          lecture: '',
+          showAddMsg: true,
+          addMsg: '\''+values.lecture+'\''+' successfully added!',
+        });
+        setMyLectures([
+          ...myLectures,
+          {
+            code: tempLecture[0],
+            name: tempLecture[1],
+            description: dummyTxt,
+          },
+        ]);
+      }
+    };
+
+    function deleteLecture(index) {
+      let tempLectures = myLectures;
+      setValues({
+        ...values,
+        showDeleteMsg: true,
+        deletedLecture: tempLectures[index].code+ ' - ' +tempLectures[index].name,
+      });
+      tempLectures.splice(index,1);
+      setMyLectures(tempLectures);
+      if(!myLectures[0]) {
+        setValues({
+          ...values,
+          isMyLecturesHidden: false,
+        });
+      } 
+    };
+
+    function selectLecture(lecture) {
+      setSelectedLecture(lecture);
+    };
 
   return (
     <>
@@ -191,7 +337,7 @@ export default function Lectures() {
         <Grid container
         direction='row'
         justfiyContent='space-evenly'
-        sx={{mt: 8, mb: 30}}
+        sx={{mt: 8, mb: 20}}
         >
             <Sidebar />
             <Grid item xs={isCollapsed ? 9 : 8} sx={{ml: 7}}>
@@ -203,7 +349,8 @@ export default function Lectures() {
                     <Grid item>
                       <Typography sx={{fontSize: 25, fontWeight: 'bold', mb: 8}}>MY LECTURES</Typography>
                     </Grid>
-                    {values.isAddLectureHidden ? (
+                    {values.isAddLectureHidden && values.isEditLectureHidden ? (
+                      <>
                       <Grid item>
                         <Grid container
                         direction='row'
@@ -213,10 +360,10 @@ export default function Lectures() {
                               <Button
                                 variant="contained"
                                 fullWidth
-                                onClick={showHideAddLecture}
+                                onClick={showHideEditLecture}
                                 sx={{lineHeight: '40px'}}
                                 >
-                                  Add New Lecture
+                                  Edit Lectures
                               </Button>
                             </ThemeProvider>
                           </Grid>
@@ -234,9 +381,11 @@ export default function Lectures() {
                           </Grid>
                         </Grid>
                       </Grid>
+                      </>
                     ): null}
                   </Grid>
-                  {values.isAddLectureHidden ? null : (
+                  {values.isAddLectureHidden && values.isEditLectureHidden ? null : (
+                    //EDIT LECTURES
                   <>
                   <Grid container
                   direction='column'
@@ -247,88 +396,208 @@ export default function Lectures() {
                     <Grid item>
                       <Grid container
                       direction='row'
+                      justifyContent=''
                       sx={{}}
                       >
-                        <Grid item xs={2}>
-                          <Typography sx={{fontSize: 15, fontWeight: 'bold'}}>Add New Lecture</Typography>
-                          <hr />
+                        <Grid item  onClick={() => showHideAddLecture()} xs={3} sx={{cursor: 'pointer', pb: 2, borderBottom: values.isAddLectureHidden ? '1px solid black' : '2px solid black'}}>
+                          <Typography sx={{fontSize: 15, fontWeight: values.isAddLectureHidden ? 'normal' : 800, textAlign: 'center',}}>Add New Lecture</Typography>
+                        </Grid>
+                        <Grid item onClick={() => showHideDeleteLecture()} xs={3} sx={{ml: 5, cursor: 'pointer', pb: 2, borderBottom: values.isDeleteLectureHidden ? '1px solid black' : '2px solid black'}}>
+                          <Typography sx={{fontSize: 15, fontWeight: values.isDeleteLectureHidden ? 'normal' : 800, textAlign: 'center'}}>Delete Lecture</Typography>
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item>
-                      <Grid container
-                      direction='row'
-                      sx={{}}
-                      >
-                        <Grid item xs={5} xl={4}>
-                          <FormControl className={classes.textField} fullWidth>
-                            <InputLabel>Semester</InputLabel>
-                            <Select label="Semester"
-                                value={values.semester}
-                                onChange={handleChange('semester')}
-                            >
-                              <MenuItem value={1}>Fall Semester</MenuItem>
-                              <MenuItem value={2}>Spring Semester</MenuItem>
-                              <MenuItem value={3}>Summer School</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item>
-                      <Grid container
+                    {values.isAddLectureHidden ? null : (
+                      //ADD LECTURE
+                      <>
+                      <Grid item>
+                        <Grid container
                         direction='row'
-                        justifyContent=''
+                        sx={{}}
                         >
-                          <Grid item xs={5} xl={4}>
+                          <Grid item xs={4} xl={4}>
                             <FormControl className={classes.textField} fullWidth>
-                              <InputLabel>Lecture</InputLabel>
-                              <Select label="Lecture"
-                                  value={values.lecture}
-                                  onChange={handleChange('lecture')}
-                              >
-                                <MenuItem value={1}>BIL343 (Object Oriented Programming)</MenuItem>
-                                <MenuItem value={2}>BIL344 (Database Management Systems)</MenuItem>
-                                <MenuItem value={3}>BILXXX (Lorem Impsum Text)</MenuItem>
+                              <InputLabel>Semester</InputLabel>
+                              <Select label="Semester"
+                                  value={values.semester}
+                                  onChange={handleChange('semester')}
+                                  >
+                                <MenuItem value={'Fall'}>Fall Semester</MenuItem>
+                                <MenuItem value={'Spring'}>Spring Semester</MenuItem>
                               </Select>
                             </FormControl>
                           </Grid>
-                          <ThemeProvider theme={theme2}>
-                          <Grid item sx={{ml: 7}}>
-                              <Button
-                                variant="contained"
-                                fullWidth
-                                onClick={""}
-                                sx={{lineHeight: '40px'}}
-                                >
-                                Add lecture
-                              </Button>
-                          </Grid>
-                          <Grid item sx={{ml: 2}}>
-                              <Button
-                                variant="contained"
-                                fullWidth
-                                onClick={showHideAddLecture}
-                                sx={{lineHeight: '40px'}}
-                                >
-                                  Cancel
-                              </Button>
-                          </Grid>
-                          <Grid item sx={{ml: 10}}>
-                              <Button
-                                variant="contained"
-                                fullWidth
-                                onClick={showMyLectures}
-                                sx={{lineHeight: '40px'}}
-                                >
-                                  {!values.isMyLecturesHidden ? 'Show My Lectures' : 'Hide My Lectures'}
-                              </Button>
-                          </Grid>
-                          </ThemeProvider>
                         </Grid>
-                    </Grid>
+                      </Grid>
+                      <Grid item>
+                        <Grid container
+                          direction='row'
+                          justifyContent=''
+                          >
+                            <Grid item xs={4} xl={4}>
+                              <FormControl className={classes.textField} fullWidth>
+                                <InputLabel>Lecture</InputLabel>
+                                <Select label="Lecture"
+                                    value={values.lecture}
+                                    onChange={handleChange('lecture')}
+                                >
+                                  <MenuItem value={'BILXXX - Lorem Impsum Text'}>BILXXX (Lorem Impsum Text)</MenuItem>
+                                  <MenuItem value={'BILXXX - Lorem Impsum Text'}>BILXXX (Lorem Impsum Text)</MenuItem>
+                                  <MenuItem value={'BILXXX - Lorem Impsum Text'}>BILXXX (Lorem Impsum Text)</MenuItem>
+                                </Select>
+                              </FormControl>
+                            </Grid>
+                            <ThemeProvider theme={theme2}>
+                            <Grid item xs={2} sx={{ml: 7}}>
+                                <Button
+                                  variant="contained"
+                                  fullWidth
+                                  onClick={addLecture}
+                                  sx={{lineHeight: '40px'}}
+                                  >
+                                  Add lecture
+                                </Button>
+                            </Grid>
+                            <Grid item xs={1} sx={{ml: 2}}>
+                                <Button
+                                  variant="contained"
+                                  fullWidth
+                                  onClick={showHideEditLecture}
+                                  sx={{lineHeight: '40px'}}
+                                  >
+                                    Cancel
+                                </Button>
+                            </Grid>
+                            <Grid item xs={3} sx={{ml: 6}}>
+                                <Button
+                                  variant="contained"
+                                  fullWidth
+                                  onClick={showMyLectures}
+                                  sx={{lineHeight: '40px'}}
+                                  >
+                                    {!values.isMyLecturesHidden ? 'Show My Lectures' : 'Hide My Lectures'}
+                                </Button>
+                            </Grid>
+                            </ThemeProvider>
+                          </Grid>
+                      </Grid>
+                      {values.showAddMsg ? (
+                        <Grid item>
+                          <Grid container
+                            direction='row'
+                            justifyContent='center'
+                            >
+                              <Grid item sx={{mt: 1, fontWeight: 'bold', color: values.addMsg.includes('select') ? 'red' : 'green'}}>
+                                {values.addMsg}
+                              </Grid>
+                            </Grid>
+                        </Grid>
+                      ) : null}
+                      </>
+                    )}
+                    {values.isDeleteLectureHidden ? null : (
+                      //DELETE LECTURE
+                      <>
+                      <Grid item>
+                        <Grid container
+                        direction='row'
+                        sx={{fontWeight: 'bold'}}
+                        >
+                          <Grid item xs={2} xl={2}>
+                            Lecture Code
+                          </Grid>
+                          <Grid item xs={4} xl={3}>
+                            Lecture Name
+                          </Grid>
+                          <Grid item xs={5} xl={4}>
+                            Lecture Description
+                          </Grid>
+                          <Grid item xs={1} sx={{textAlign: 'center'}}>
+                            Delete
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      {!myLectures[0] ? (
+                        <Grid item>
+                        <Grid container
+                        direction='row'
+                        sx={{}}
+                        >
+                          <Grid item xs={12} sx={{textAlign: 'center'}}>
+                            You don't have any lectures. Please add new lectures to chat with TA-Bot.
+                          </Grid>
+                        </Grid>
+                        </Grid>
+                      ) : null}
+                      {myLectures.map((lecture,index) => (
+                      <>
+                      <Grid item>
+                        <Grid container
+                        direction='row'
+                        sx={{}}
+                        >
+                          <Grid item xs={2} xl={2}>
+                            {lecture.code}
+                          </Grid>
+                          <Grid item xs={4} xl={3}>
+                            {lecture.name}
+                          </Grid>
+                          <Grid item xs={5} xl={5}>
+                            {lecture.description}
+                          </Grid>
+                          <Grid item xs={1} sx={{textAlign: 'center'}}>
+                            <IconButton sx={{color: 'black'}} onClick={() => deleteLecture(index)}>
+                              <DeleteIcon /> 
+                            </IconButton>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      </>
+                      ))}
+                      {values.showDeleteMsg ? (
+                        <Grid item>
+                          <Grid container
+                          direction='row'
+                          sx={{}}
+                          >
+                            <Grid item xs={12} sx={{textAlign: 'center', mt: 2, color: 'red', fontWeight: 'bold'}}>
+                              '{values.deletedLecture}' successfully deleted! 
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      ) : null}
+                      {myLectures[0] ? (
+                      <Grid item sx={{mt: 10}}>
+                        <Grid container
+                          direction='row'
+                          justifyContent='center'
+                          >
+                            <ThemeProvider theme={theme2}>
+                              <Grid item xs={4}>
+                                  <Button
+                                    variant="contained"
+                                    fullWidth
+                                    onClick={showMyLectures}
+                                    sx={{lineHeight: '40px'}}
+                                    >
+                                      {!values.isMyLecturesHidden ? 'Show My Lectures' : 'Hide My Lectures'}
+                                  </Button>
+                              </Grid>
+                            </ThemeProvider>
+                          </Grid>
+                      </Grid>
+                      ) : null}
+                      </>
+                    )}
                   </Grid>
-                  <Grid container
+                </>
+                )}
+                {!values.isMyLecturesHidden ? (
+                  <Grid item sx={{height: '400px'}}></Grid>
+                ) : (
+                //MY LECTURES
+                <>
+                <Grid container
                   direction='column'
                   sx={{mt: 4, pl: 3}}
                   >
@@ -336,77 +605,39 @@ export default function Lectures() {
                       <hr />
                     </Grid>
                   </Grid>
-                </>
-                )}
-                {!values.isMyLecturesHidden ? (
-                  <Grid item sx={{height: '400px'}}></Grid>
-                ) : (
-                <>
                 <Grid container
                 direction='row'
                 justifyContent='space-between'
                 sx={{mt: 4, pl: 3}}
                 >
-                  <Grid item xs={5}>
-                    <Grid item sx={{p: 3}} className={classes.textBox}>
+                  {!myLectures[0] ? (
+                    <Grid container
+                    direction='row'
+                    justifyContent='center'
+                    sx={{height: '400px'}}
+                    >
+                      <Grid item>
+                        You don't have any lectures. Please add new lectures to chat with TA-Bot.
+                      </Grid>
+                    </Grid>
+                  ) : null}
+                  {myLectures.map((lecture,index) => (
+                  <Grid item xs={5} sx={{mt: index > 1 ? 4 : null}}>
+                    <Grid item sx={{p: 3}} className={classes.textBox} onClick={() => selectLecture(lecture)}>
                       <Grid container
                       direction='column'
                       spacing={4}
                       >
                         <Grid item>
-                          <Typography variant='h2'>BIL343 - Object Oriented Programming</Typography>
+                          <Typography variant='h2'>{lecture.code} - {lecture.name}</Typography>
                         </Grid> 
                         <Grid item>
-                          <Typography variant='h3'>{dummyTxt}</Typography>
+                          <Typography variant='h3'>{lecture.description}</Typography>
                         </Grid> 
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xs={5}>
-                    <Grid item sx={{p: 3}} className={classes.textBox}>
-                      <Grid container
-                      direction='column'
-                      spacing={4}
-                      >
-                        <Grid item>
-                          <Typography variant='h2'>BIL344 - Database Management Systems</Typography>
-                        </Grid> 
-                        <Grid item>
-                          <Typography variant='h3'>{dummyTxt}</Typography>
-                        </Grid> 
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={5} sx={{mt: 4}}>
-                    <Grid item sx={{p: 3}} className={classes.textBox}>
-                      <Grid container
-                      direction='column'
-                      spacing={4}
-                      >
-                        <Grid item>
-                          <Typography variant='h2'>BILXXX - Lorem Impsum Text</Typography>
-                        </Grid> 
-                        <Grid item>
-                          <Typography variant='h3'>{dummyTxt}</Typography>
-                        </Grid> 
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={5} sx={{mt: 4}}>
-                    <Grid item sx={{p: 3}} className={classes.textBox}>
-                      <Grid container
-                      direction='column'
-                      spacing={4}
-                      >
-                        <Grid item>
-                          <Typography variant='h2'>BILXXX - Lorem Impsum Text</Typography>
-                        </Grid> 
-                        <Grid item>
-                          <Typography variant='h3'>{dummyTxt}</Typography>
-                        </Grid> 
-                      </Grid>
-                    </Grid>
-                  </Grid>
+                  ))}
                 </Grid>
                 </>
                 )}

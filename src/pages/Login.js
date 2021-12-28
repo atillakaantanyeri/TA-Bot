@@ -214,8 +214,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   let navigate = useNavigate();
   const classes = useStyles();
-
-  const [isCollapsed, setIsCollapsed] = useContext(Context);
+  
+  const {value1, value2} = useContext(Context);
+  const [isCollapsed, setIsCollapsed] = value1;
   
   const [values, setValues] = React.useState({
     mailAdress: '',

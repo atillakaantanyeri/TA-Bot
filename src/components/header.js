@@ -36,13 +36,13 @@ export default function Header() {
         <Grid container
         direction='row'
         justifyContent='space-between'
-        sx={{height: '80px', lineHeight: '80px'}}
+        sx={{height: '81px', lineHeight: '80px'}}
         >
-            <Grid item xs={9}>
+            <Grid item xs={8}>
                     <Grid container
                     direction='row'
                     justifyContent=''
-                    sx={{ml: 3}}
+                    sx={{pl: 3}}
                     >
                         <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
                             <Grid item>
@@ -56,18 +56,18 @@ export default function Header() {
                         </Link>
                     </Grid>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
                 <Grid container
                 direction='row'
                 justifyContent='center'
                 >
-                    <Grid item sx={{mt: "20px", mr: 2}}>
+                    <Grid item sx={{mt: "20px", pr: 2}}>
                         <Avatar alt="user" src="" sx={{height: "40px", width: "40px", color: '#F3DD00', backgroundColor: '#F3DD00', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',}} />
                     </Grid>
                     <Grid item>
                         <Typography variant='h2' sx={{display: 'inline-block', fontWeight: 'normal'}}>Atilla Kaan Tanyeri</Typography>
                     </Grid>
-                    <Grid item sx={{mt: "7px", ml: 10}}>
+                    <Grid item sx={{mt: "7px", pl: 10}}>
                         <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
                             <LogoutIcon onClick={logOut}/>
                         </Link>

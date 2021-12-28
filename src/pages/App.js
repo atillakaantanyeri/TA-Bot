@@ -12,10 +12,34 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 export default function App() {
 
+  const dummyTxt = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry...';
   const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [myLectures, setMyLectures] = React.useState([
+    {
+      code: 'BIL343',
+      name: 'Object Oriented Programming',
+      description: dummyTxt,
+    },
+    {
+      code: 'BIL344',
+      name: 'Database Management Systems',
+      description: dummyTxt,
+    },
+    {
+      code: 'BILXXX',
+      name: 'Lorem Impsum Text',
+      description: dummyTxt,
+    },
+    {
+      code: 'BILXXX',
+      name: 'Lorem Impsum Text',
+      description: dummyTxt,
+    },
+  ]);
+  const [selectedLecture, setSelectedLecture] = React.useState({});
 
   return (
-    <Context.Provider value={[isCollapsed, setIsCollapsed]}>
+    <Context.Provider value={{value1: [isCollapsed, setIsCollapsed], value2: [myLectures, setMyLectures], value3: [selectedLecture, setSelectedLecture]}}>
       <BrowserRouter>
         <div>
           

@@ -36,7 +36,8 @@ export default function Sidebar() {
     const classes = useStyles();
     const location = useLocation();
 
-    const [isCollapsed, setIsCollapsed] = useContext(Context);
+    const {value1, value2} = useContext(Context);
+    const [isCollapsed, setIsCollapsed] = value1;
 
     function collapseSidebar() {
         if(!isCollapsed) {
