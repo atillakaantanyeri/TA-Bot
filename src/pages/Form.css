@@ -1,0 +1,56 @@
+.App{
+    margin: 10px;
+  
+  }
+  #lectures{
+    width:230px;
+    border-radius: 5px;
+  }
+  .tbox{
+    width:230px;
+    border-radius: 5px;
+  }
+  .table{
+    margin: 10px;
+    background-color: rgba(196, 196, 196, 0.1);
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #aaaaaa;
+  }
+  table{
+    margin: 10px;
+    padding:10px;
+    border-collapse: collapse;
+    
+  }
+  #baslik1,#baslik2{
+    font-size: large;
+  }
+  .col1{
+    text-align: left;
+  }
+  
+  td:nth-child(even), th:nth-child(even) {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgba(196, 196, 196, 0.2);
+  }
+  td{
+    text-align: center;
+  }
+  .col2,.col3,.col4,.col5,.col6{
+    width:10%;
+  }
+  
+  .tarea{
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .button{
+    margin:50px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    background-color:black;
+    border-radius: 10px;
+  }
